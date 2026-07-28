@@ -23,19 +23,12 @@ app.use("/api/submission", submissionRouter);
 app.use("/api/dash" , homeRouter)
 app.use("/api/profile", profileRouter);
 
-const start = async () => {
-    try {
-        await mongoose.connect(process.env.MONGO_URL);
-        console.log("Connected to DB");
+mongoose.connect(process.env.MONGO_URL)
+.then(()=>{
+    console.log("Connected to DB");
+})
+.catch((err)=>{
+    console.log(err);
+});
 
-        const PORT = process.env.PORT || 8000;
-
-        app.listen(PORT, () => {
-            console.log(`Server is running on port ${PORT}`);
-        });
-    } catch (err) {
-        console.log(err);
-    }
-};
-
-start();
+export default app;

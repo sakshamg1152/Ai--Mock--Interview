@@ -1,4 +1,16 @@
 {
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app.js",
+  "scripts": {
+    "dev": "nodemon src/app.js",
+    "start": "node src/app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
   "dependencies": {
     "@google/genai": "^2.10.0",
     "axios": "^1.18.1",
@@ -11,18 +23,5 @@
     "http-status": "^2.1.0",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.7.4"
-  },
-  "name": "backend",
-  "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
-  "scripts": {
-    "dev": "nodemon src/app.js",
-    "start": "node src/app.js",
-    "prod": "pm2 src/app.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "module"
+  }
 }
