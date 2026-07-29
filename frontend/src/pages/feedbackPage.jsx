@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "../styles/feedbackPage.css";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
@@ -23,29 +23,34 @@ function FeedbackPage() {
     const [difficulty, setDifficulty] = useState("");
     const [intetId , setInterId] = useState("");
 
-    const fetchData = async (interviewId) => {
-        if (!interviewId) return;
-        try {
-            const token = localStorage.getItem("token");
-            const response = await axios.get(
-                `https://ai-mock-interview-code-arena.vercel.app/api/interview/${interviewId}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }
-            );
-            const interviewData = response.data.interview;
-            if (interviewData) { 
-                setRole(interviewData.role);
-                setDifficulty(interviewData.difficulty);
-            }
-        } catch (e) {
-            console.error("Error fetching interview data:", e);
-        }
-    };
+    const fetchData = useCallback(async (interviewId) => {
+    if (!interviewId) return;
 
-    const fetchResult = async () => {
+    try {
+        const token = localStorage.getItem("token");
+
+        const response = await axios.get(
+            `https://ai-mock-interview-code-arena.vercel.app/api/interview/${interviewId}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+
+        const interviewData = response.data.interview;
+
+        if (interviewData) {
+            setRole(interviewData.role);
+            setDifficulty(interviewData.difficulty);
+        }
+
+    } catch (e) {
+        console.error("Error fetching interview data:", e);
+    }
+}, []);
+
+    const fetchResult = useCallback(async () => {
         try {
             console.log("Fetching submission with ID parameter:", id); 
             const token = localStorage.getItem("token");
@@ -84,17 +89,17 @@ function FeedbackPage() {
             }
         } catch (e) {
             console.error("Error fetching submission details:", e);
-        }
-    };
+            }
+}, [id, fetchData]);
 
     // Fixed the PHP-style dot string concatenation syntax error
     console.log("strength : ", strength);
 
     useEffect(() => {
-        if (id) {
-            fetchResult();
-        }
-    }, [id]);
+    if (id) {
+        fetchResult();
+    }
+}, [id, fetchResult]);
 
     return (
         <div className="feedbackPage">
