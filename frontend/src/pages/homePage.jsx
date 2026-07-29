@@ -7,10 +7,8 @@ import axios from "axios";
 
 
 import {
-  FaBell,
   FaSearch,
   FaUserCircle,
-  FaFire,
   FaChartLine,
   FaStar,
   FaClipboardList,

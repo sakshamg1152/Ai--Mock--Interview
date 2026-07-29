@@ -1,13 +1,9 @@
 import "../styles/landingPage.css";
 import {
   FaRobot,
-  FaChartLine,
-  FaCode,
   FaArrowRight,
   FaGithub,
   FaLinkedin,
-  FaTwitter,
-  FaInstagram,
   FaChevronDown,
 } from "react-icons/fa";
 

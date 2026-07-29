@@ -21,7 +21,6 @@ function FeedbackPage() {
     const { id } = useParams();
     const [role, setRole] = useState("");
     const [difficulty, setDifficulty] = useState("");
-    const [no_of_questions, setNo_of_questions] = useState(0);
     const [intetId , setInterId] = useState("");
 
     const fetchData = async (interviewId) => {
@@ -40,7 +39,6 @@ function FeedbackPage() {
             if (interviewData) { 
                 setRole(interviewData.role);
                 setDifficulty(interviewData.difficulty);
-                setNo_of_questions(interviewData.no_of_questions);
             }
         } catch (e) {
             console.error("Error fetching interview data:", e);

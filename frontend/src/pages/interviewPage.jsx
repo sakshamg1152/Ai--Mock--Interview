@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"; 
+import React, { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import "../styles/interviewPage.css";
 import axios from "axios";
@@ -38,33 +38,40 @@ function InterviewPage() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   /* ================= API FETCH FUNCTION ================= */
-  const fetchData = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const response = await axios.get(
-          `https://ai-mock-interview-code-arena.vercel.app/api/interview/${id}`,
-          {
-              headers: {
-                  Authorization: `Bearer ${token}`
-              }
-          }
-      );
-      const interviewData = response.data.interview; 
+  const fetchData = useCallback(async () => {
+  try {
+    const token = localStorage.getItem("token");
 
-      if (interviewData && interviewData.questions) {
-        setQuestions(interviewData.questions);
-        setAnswers(new Array(interviewData.questions.length).fill("// Write your answer here...\n\n"));
-        
-        setRole(interviewData.role);
-        setDifficulty(interviewData.difficulty);
-        setExperinece(interviewData.experience);
-        setNo_of_questions(interviewData.no_of_questions);
-        setInterview_type(interviewData.interview_type);
+    const response = await axios.get(
+      `https://ai-mock-interview-code-arena.vercel.app/api/interview/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       }
-    } catch (e) {
-      console.error("Error fetching interview data:", e);
+    );
+
+    const interviewData = response.data.interview;
+
+    if (interviewData && interviewData.questions) {
+      setQuestions(interviewData.questions);
+      setAnswers(
+        new Array(interviewData.questions.length)
+          .fill("// Write your answer here...\n\n")
+      );
+
+      setRole(interviewData.role);
+      setDifficulty(interviewData.difficulty);
+      setExperinece(interviewData.experience);
+      setNo_of_questions(interviewData.no_of_questions);
+      setInterview_type(interviewData.interview_type);
     }
-  };
+
+  } catch (e) {
+    console.error("Error fetching interview data:", e);
+  }
+}, [id]);
+
 
   useEffect(() => {
     if (no_of_questions > 0) {
@@ -73,11 +80,41 @@ function InterviewPage() {
     }
   }, [no_of_questions]);
   
-  useEffect(() => {
-    if (id) {
-      fetchData();
+useEffect(() => {
+  if (id) {
+    fetchData();
+  }
+}, [id, fetchData]);
+
+const handleSubmission = useCallback(async () => {
+    try {
+      const result = await answerCheckingF(id, questions, answers);
+      console.log("RESULT SUBMISSION ID: ", result);
+      return result.submission._id; 
+    } catch (e) {
+      console.log("Submission evaluation crash: ", e);
+      throw e;
     }
-  }, [id]);
+}, [answerCheckingF, id, questions, answers]);
+
+
+const handleFinish = useCallback(async () => {
+    console.log("Submitted Answers: ", answers);
+    alert("Interview Submitted Successfully! Calculating score...");
+
+    try {
+      const targetSubmissionId = await handleSubmission();
+
+      if (targetSubmissionId) {
+        router(`/feed/${targetSubmissionId}`);
+      } else {
+        console.error("Submission resolved to empty value.");
+      }
+
+    } catch (err) {
+      console.error("Failed handling finish logic: ", err);
+    }
+}, [answers, handleSubmission, router]);
 
   useEffect(() => {
     if(!isLoaded){
@@ -96,7 +133,7 @@ function InterviewPage() {
     }, 1000);
 
     return () => clearTimeout(timer);
-  }, [time, questions.length, isLoaded]);
+  }, [time, questions.length, isLoaded, handleFinish]);
 
   useEffect(() => {
     const handleBeforeUnload = (event) => {
@@ -137,36 +174,6 @@ function InterviewPage() {
   const handleNext = () => {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
-    }
-  };
-
-  /* ================= SUBMISSION MANAGEMENT ================= */
-  const handleSubmission = async () => {
-    try {
-      const result = await answerCheckingF(id, questions, answers);
-      console.log("Hello");
-      console.log("RESULT SUBMISSION ID: ", result);
-      return result.submission._id; 
-    } catch (e) {
-      console.log("Submission evaluation crash: ", e);
-      throw e;
-    }
-  };
-
-  const handleFinish = async () => {
-    console.log("Submitted Answers: ", answers);
-    alert("Interview Submitted Successfully! Calculating score...");
-    
-    try {
-      const targetSubmissionId = await handleSubmission();
-      if (targetSubmissionId) {
-        router(`/feed/${targetSubmissionId}`);
-      } else {
-        console.error("Submission resolved to an empty value.");
-        alert("We had trouble retrieving your evaluation. Check the dev console.");
-      }
-    } catch (err) {
-      console.error("Failed handling finish logic: ", err);
     }
   };
 

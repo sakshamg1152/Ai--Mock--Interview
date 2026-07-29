@@ -1,7 +1,6 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext } from "react";
 import axios from 'axios';
 import httpStatus from 'http-status'; 
-import { useNavigate } from 'react-router-dom';
 export  const InterviewContext = createContext({}); 
 
 const client = axios.create({
