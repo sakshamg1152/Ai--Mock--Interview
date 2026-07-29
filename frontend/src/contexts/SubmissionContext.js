@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 export  const SubmissionContext = createContext({}); 
 
 const client = axios.create({
-    baseURL: "http://localhost:8000/api/submission"
+    baseURL: "https://ai-mock-interview-code-arena.vercel.app/api/submission"
 })
 
 export const SubmissionProvider = ({children}) =>{
