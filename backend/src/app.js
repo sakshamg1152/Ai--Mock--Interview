@@ -31,4 +31,10 @@ mongoose.connect(process.env.MONGO_URL)
     console.log(err);
 });
 
+app.get("/", (req, res) => {
+    res.json({
+        message: "Backend is running successfully"
+    });
+});
+
 export default app;
