@@ -43,7 +43,7 @@ function InterviewPage() {
     const token = localStorage.getItem("token");
 
     const response = await axios.get(
-      `https://ai-mock-interview-code-arena.vercel.app/api/interview/${id}`,
+      `https://ai-mock-interview-sandy-gamma.vercel.app/api/interview/${id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`

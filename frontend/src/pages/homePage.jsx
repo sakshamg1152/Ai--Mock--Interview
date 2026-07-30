@@ -30,7 +30,7 @@ function HomePage() {
         try {
             const token = localStorage.getItem("token");
             const response = await axios.get(
-                "https://ai-mock-interview-code-arena.vercel.app/api/dash/getdash",
+                "https://ai-mock-interview-sandy-gamma.vercel.app/api/dash/getdash",
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -53,7 +53,7 @@ function HomePage() {
         try {
             const token = localStorage.getItem("token");
             const response = await axios.get(
-                "https://ai-mock-interview-code-arena.vercel.app/api/dash/pending",
+                "https://ai-mock-interview-sandy-gamma.vercel.app/api/dash/pending",
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -76,7 +76,7 @@ function HomePage() {
             const token = localStorage.getItem("token");
             const response = await axios.get(
 
-                `https://ai-mock-interview-code-arena.vercel.app/api/interview/search?role=${value}`,
+                `https://ai-mock-interview-sandy-gamma.vercel.app/api/interview/search?role=${value}`,
 
                 {
                     headers:{

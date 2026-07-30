@@ -3,7 +3,7 @@ import axios from 'axios';
 export  const SubmissionContext = createContext({}); 
 
 const client = axios.create({
-    baseURL: "https://ai-mock-interview-code-arena.vercel.app/api/submission"
+    baseURL: "https://ai-mock-interview-sandy-gamma.vercel.app/api/submission"
 })
 
 export const SubmissionProvider = ({children}) =>{

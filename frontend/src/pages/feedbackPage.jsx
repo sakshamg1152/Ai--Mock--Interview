@@ -30,7 +30,7 @@ function FeedbackPage() {
         const token = localStorage.getItem("token");
 
         const response = await axios.get(
-            `https://ai-mock-interview-code-arena.vercel.app/api/interview/${interviewId}`,
+            `https://ai-mock-interview-sandy-gamma.vercel.app/api/interview/${interviewId}`,
             {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -55,7 +55,7 @@ function FeedbackPage() {
             console.log("Fetching submission with ID parameter:", id); 
             const token = localStorage.getItem("token");
             const response = await axios.get(
-                `https://ai-mock-interview-code-arena.vercel.app/api/submission/sub/${id}`,
+                `https://ai-mock-interview-sandy-gamma.vercel.app/api/submission/sub/${id}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`

@@ -4,7 +4,7 @@ import httpStatus from 'http-status';
 export  const InterviewContext = createContext({}); 
 
 const client = axios.create({
-    baseURL: "https://ai-mock-interview-code-arena.vercel.app/api/interview"
+    baseURL: "https://ai-mock-interview-sandy-gamma.vercel.app/api/interview"
 })
 
 export const InterviewProvider = ({children}) =>{

@@ -39,7 +39,7 @@ function ChangePassword() {
 
         const response = await axios.put(
 
-            "https://ai-mock-interview-code-arena.vercel.app/api/v1/users/change-password",
+            "https://ai-mock-interview-sandy-gamma.vercel.app/api/v1/users/change-password",
 
             {
                 currentPassword,
