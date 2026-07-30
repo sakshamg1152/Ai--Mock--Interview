@@ -23,12 +23,18 @@ app.use("/api/submission", submissionRouter);
 app.use("/api/dash" , homeRouter)
 app.use("/api/profile", profileRouter);
 
-mongoose.connect(process.env.MONGO_URL)
-.then(()=>{
-    console.log("Connected to DB");
+
+
+console.log("MONGO_URL exists:", !!process.env.MONGO_URL);
+console.log("MONGO_URL starts with:", process.env.MONGO_URL?.substring(0, 20));
+mongoose.connect(process.env.MONGO_URL, {
+  serverSelectionTimeoutMS: 30000,
 })
-.catch((err)=>{
-    console.log(err);
+.then(() => {
+  console.log("✅ Connected to DB");
+})
+.catch((err) => {
+  console.error("❌ Mongo Error:", err);
 });
 
 app.get("/", (req, res) => {
