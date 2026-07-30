@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 export  const AuthContext = createContext({}); 
 
 const client = axios.create({
-    baseURL: "https://ai-mock-interview-code-arena.vercel.app/api/v1/users"
+    baseURL: "https://ai-mock-interview-sandy-gamma.vercel.app/api/v1/users"
 })
 
 export const AuthProvider = ({children}) =>{
